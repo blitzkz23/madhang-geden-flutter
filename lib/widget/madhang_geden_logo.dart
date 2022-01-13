@@ -15,10 +15,13 @@ class MadhangGedenLogo extends StatelessWidget {
           width: 40,
           height: 40,
         ),
+        const SizedBox(
+          width: 4,
+        ),
         Text(
           'Madhang Geden',
           style: GoogleFonts.montserrat(
-            color: Colors.white,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
         )

@@ -13,21 +13,23 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
     FutureBuilder<String> _buildList(BuildContext context) {
       return FutureBuilder<String>(
           future: DefaultAssetBundle.of(context)
               .loadString('assets/local_restaurant.json'),
           builder: (context, snapshot) {
-            var jsonMap = jsonDecode(snapshot.data!);
-            var restaurant = Restaurant.fromJson(jsonMap);
+            late var jsonMap;
+            late var restaurant;
+            if (snapshot.hasData) {
+              jsonMap = jsonDecode(snapshot.data!);
+              restaurant = Restaurant.fromJson(jsonMap);
+            }
             return Padding(
                 padding: const EdgeInsets.all(20),
                 child: SizedBox(
-                  height: 530,
+                  height: 470,
                   child: ListView(
-                    children: restaurant.restaurants.map((resto) {
+                    children: restaurant.restaurants.map<Widget>((resto) {
                       return RestaurantCard(resto: resto);
                     }).toList(),
                   ),
@@ -36,50 +38,63 @@ class HomePage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: kRedPrimary,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: kWhiteColor,
       body: SafeArea(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 20, left: 20),
+              padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
                   const MadhangGedenLogo(),
                   const Spacer(),
                   IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.settings,
-                        color: Colors.white,
-                      ))
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.settings,
+                      color: Colors.black,
+                    ),
+                  ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SizedBox(
+                child: TextFormField(
+                  cursorColor: kBlackColor,
+                  decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.search),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'Search for a restaurant...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: kRedPrimary),
+                      )),
+                ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: double.infinity,
-                  height: screenHeight - 143 - 20,
-                  decoration: BoxDecoration(
-                      color: kWhiteColor,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, left: 20),
-                        child: Text(
-                          'Recommended',
-                          style: poppinsTheme.headline6,
-                        ),
-                      ),
-                      _buildList(context),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 20),
+                  child: Text(
+                    'Recommended',
+                    style: poppinsTheme.headline6?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
+                _buildList(context),
               ],
             ),
           ],
