@@ -13,30 +13,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FutureBuilder<String> _buildList(BuildContext context) {
-      return FutureBuilder<String>(
-          future: DefaultAssetBundle.of(context)
-              .loadString('assets/local_restaurant.json'),
-          builder: (context, snapshot) {
-            late var jsonMap;
-            late var restaurant;
-            if (snapshot.hasData) {
-              jsonMap = jsonDecode(snapshot.data!);
-              restaurant = Restaurant.fromJson(jsonMap);
-            }
-            return Padding(
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  height: 470,
-                  child: ListView(
-                    children: restaurant.restaurants.map<Widget>((resto) {
-                      return RestaurantCard(resto: resto);
-                    }).toList(),
-                  ),
-                ));
-          });
-    }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: kWhiteColor,
@@ -102,4 +78,32 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+FutureBuilder<String> _buildList(BuildContext context) {
+  return FutureBuilder<String>(
+      future: DefaultAssetBundle.of(context)
+          .loadString('assets/local_restaurant.json'),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var jsonMap = jsonDecode(snapshot.data!);
+          var restaurant = Restaurant.fromJson(jsonMap);
+          return Padding(
+              padding: const EdgeInsets.all(20),
+              child: SizedBox(
+                height: 470,
+                child: ListView(
+                  children: restaurant.restaurants.map<Widget>((resto) {
+                    return RestaurantCard(resto: resto);
+                  }).toList(),
+                ),
+              ));
+        } else {
+          return const SizedBox(
+            height: 240,
+            width: 240,
+            child: Text('Can\'t display data.'),
+          );
+        }
+      });
 }

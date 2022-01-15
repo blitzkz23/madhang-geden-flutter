@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/model/restaurant.dart';
 import 'package:restaurant_app/common/styles.dart';
+import 'package:restaurant_app/page/detail_page.dart';
 
 class RestaurantCard extends StatelessWidget {
   final RestaurantElement resto;
@@ -10,17 +13,22 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, DetailPage.routeName, arguments: resto);
+      },
       child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8, right: 8, top: 8),
-            child: Expanded(
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  resto.pictureId,
-                  width: 140,
+                child: Hero(
+                  tag: resto.id,
+                  child: Image.network(
+                    resto.pictureId,
+                    width: 140,
+                  ),
                 ),
               ),
             ),
@@ -31,17 +39,39 @@ class RestaurantCard extends StatelessWidget {
               children: [
                 Text(
                   resto.name,
-                  maxLines: 1,
+                  maxLines: 2,
                   softWrap: false,
                   overflow: TextOverflow.ellipsis,
-                  style: poppinsTheme.headline6,
+                  style: poppinsTheme.headline6
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 4,
                 ),
                 Text(
                   resto.city,
                   style: poppinsTheme.subtitle1?.copyWith(color: Colors.grey),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow.shade700,
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    Text(
+                      resto.rating.toString(),
+                      style: poppinsTheme.subtitle1?.copyWith(
+                          color: kBlackColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
+                    ),
+                  ],
                 ),
               ],
             ),

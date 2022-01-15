@@ -1,9 +1,10 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-const Color kBlackColor = Color(0xFF1F1449);
+const Color kBlackColor = Color(0xFF1F1D2B);
 const Color kWhiteColor = Color(0xffFAFCFE);
 const Color kRedPrimary = Color(0xffCE5B78);
+const Color kGreyColor = Color(0xffC7C9D9);
 
 final TextTheme poppinsTheme = TextTheme(
   headline1: GoogleFonts.poppins(
@@ -13,7 +14,7 @@ final TextTheme poppinsTheme = TextTheme(
   headline3: GoogleFonts.poppins(fontSize: 46, fontWeight: FontWeight.w400),
   headline4: GoogleFonts.poppins(
       fontSize: 33, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-  headline5: GoogleFonts.poppins(fontSize: 23, fontWeight: FontWeight.w400),
+  headline5: GoogleFonts.poppins(fontSize: 23, fontWeight: FontWeight.w500),
   headline6: GoogleFonts.poppins(
       fontSize: 19, fontWeight: FontWeight.w500, letterSpacing: 0.15),
   subtitle1: GoogleFonts.poppins(
