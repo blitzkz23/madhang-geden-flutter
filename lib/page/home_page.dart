@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/api/api_service.dart';
@@ -34,9 +32,12 @@ class _HomePageState extends State<HomePage> {
                   const MadhangGedenLogo(),
                   const Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, SearchPage.routeName);
+                    },
                     icon: const Icon(
-                      Icons.settings,
+                      Icons.search,
+                      size: 30,
                       color: Colors.black,
                     ),
                   ),

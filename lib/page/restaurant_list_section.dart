@@ -1,16 +1,19 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
-import 'package:restaurant_app/model/restaurant.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/widget/restaurant_card.dart';
 
-class RestaurantListSection extends StatelessWidget {
+class RestaurantListSection extends StatefulWidget {
   const RestaurantListSection({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<RestaurantListSection> createState() => _RestaurantListSectionState();
+}
+
+class _RestaurantListSectionState extends State<RestaurantListSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +42,7 @@ class RestaurantListSection extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: _buildList(),
           ),
-          height: 570,
+          height: 555,
         ),
       ],
     );

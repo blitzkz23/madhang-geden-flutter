@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:restaurant_app/model/restaurant.dart';
 import 'package:restaurant_app/page/detail_page.dart';
+import 'package:restaurant_app/page/search_page.dart';
 import 'common/styles.dart';
 import 'page/splash_screen.dart';
 import 'page/home_page.dart';
@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
           DetailPage.routeName: (context) => DetailPage(
                 restaurantId:
                     ModalRoute.of(context)?.settings.arguments as String,
-              )
+              ),
+          SearchPage.routeName: (context) => const SearchPage(),
         });
   }
 }
