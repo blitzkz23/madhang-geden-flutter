@@ -6,7 +6,9 @@ import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/page/detail_page.dart';
 
 class RestaurantCard extends StatelessWidget {
-  final RestaurantElement resto;
+  final Restaurant resto;
+  static String pictureUrl =
+      "https://restaurant-api.dicoding.dev/images/medium/";
 
   const RestaurantCard({Key? key, required this.resto}) : super(key: key);
 
@@ -14,7 +16,7 @@ class RestaurantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, DetailPage.routeName, arguments: resto);
+        Navigator.pushNamed(context, DetailPage.routeName, arguments: resto.id);
       },
       child: Row(
         children: [
@@ -24,9 +26,10 @@ class RestaurantCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Hero(
-                  tag: resto.id,
-                  child: Image.network(
-                    resto.pictureId,
+                  tag: pictureUrl + resto.pictureId,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/loading.gif',
+                    image: pictureUrl + resto.pictureId,
                     width: 140,
                   ),
                 ),

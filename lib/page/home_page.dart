@@ -1,16 +1,24 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/common/styles.dart';
-import 'package:restaurant_app/model/restaurant.dart';
-import 'package:restaurant_app/widget/restaurant_card.dart';
+import 'package:restaurant_app/page/restaurant_list_section.dart';
+import 'package:restaurant_app/page/search_page.dart';
+import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/widget/madhang_geden_logo.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
 
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,75 +43,16 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                child: TextFormField(
-                  cursorColor: kBlackColor,
-                  decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Search for a restaurant...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: kRedPrimary),
-                      )),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 20),
-                  child: Text(
-                    'Recommended',
-                    style: poppinsTheme.headline6?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                _buildList(context),
-              ],
+            /**
+             * Provide API service with provide to RestaurantListSection class
+             */
+            ChangeNotifierProvider(
+              create: (_) => RestaurantProvider(apiService: ApiService()),
+              child: const RestaurantListSection(),
             ),
           ],
         ),
       ),
     );
   }
-}
-
-FutureBuilder<String> _buildList(BuildContext context) {
-  return FutureBuilder<String>(
-      future: DefaultAssetBundle.of(context)
-          .loadString('assets/local_restaurant.json'),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          var jsonMap = jsonDecode(snapshot.data!);
-          var restaurant = Restaurant.fromJson(jsonMap);
-          return Padding(
-              padding: const EdgeInsets.all(20),
-              child: SizedBox(
-                height: 470,
-                child: ListView(
-                  children: restaurant.restaurants.map<Widget>((resto) {
-                    return RestaurantCard(resto: resto);
-                  }).toList(),
-                ),
-              ));
-        } else {
-          return const SizedBox(
-            height: 240,
-            width: 240,
-            child: Text('Can\'t display data.'),
-          );
-        }
-      });
 }
