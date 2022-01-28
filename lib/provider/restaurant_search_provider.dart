@@ -27,6 +27,7 @@ class RestaurantSearchProvider extends ChangeNotifier {
       _state = ResultState.loading;
       notifyListeners();
       final searchedRestaurant = await apiService.searchRestaurant(query);
+
       if (searchedRestaurant.restaurants.isEmpty) {
         _state = ResultState.noData;
         return _message = 'Restaurant not found';

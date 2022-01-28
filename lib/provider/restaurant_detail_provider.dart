@@ -28,6 +28,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
       _state = ResultState.loading;
       notifyListeners();
       final restaurantDetail = await apiService.restaurantDetail(restaurantId);
+
       if (restaurantDetail.restaurant == '') {
         _state = ResultState.noData;
         return _message = 'Restaurant not found';

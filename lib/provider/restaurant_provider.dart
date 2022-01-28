@@ -26,6 +26,7 @@ class RestaurantProvider extends ChangeNotifier {
       _state = ResultState.loading;
       notifyListeners();
       final restaurant = await apiService.restaurantList();
+
       if (restaurant.restaurants.isEmpty) {
         _state = ResultState.noData;
         return _message = 'Empty Data';

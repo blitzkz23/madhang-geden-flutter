@@ -6,6 +6,7 @@ import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
+import 'package:restaurant_app/widget/review_card.dart';
 
 class DetailPage extends StatefulWidget {
   static const routeName = '/detail_page';
@@ -164,6 +165,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 ExpansionTile(
                   tilePadding: const EdgeInsets.all(0),
+                  childrenPadding: const EdgeInsets.only(bottom: 8.0),
                   expandedAlignment: Alignment.centerLeft,
                   title: Text('Makanan', style: poppinsTheme.headline6),
                   children: [
@@ -180,8 +182,9 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 ExpansionTile(
                   tilePadding: const EdgeInsets.all(0),
+                  childrenPadding: const EdgeInsets.only(bottom: 16.0),
                   expandedAlignment: Alignment.centerLeft,
-                  title: Text('Drink', style: poppinsTheme.headline6),
+                  title: Text('Minuman', style: poppinsTheme.headline6),
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,60 +197,15 @@ class _DetailPageState extends State<DetailPage> {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Ulasan',
-                  style: poppinsTheme.headline6,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: restaurant.customerReviews.map((review) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                          top: 16.0, left: 2.0, right: 2.0),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(
-                                    0, 2), // changes position of shadow
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(16.0)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                review.name,
-                                style: poppinsTheme.headline6,
-                              ),
-                              Text(
-                                review.date,
-                                style: poppinsTheme.subtitle1
-                                    ?.copyWith(color: kGreyColor),
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                review.review,
-                                style: poppinsTheme.subtitle1,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                ExpansionTile(
+                  tilePadding: const EdgeInsets.all(0),
+                  childrenPadding: const EdgeInsets.only(bottom: 8.0),
+                  title: Text('Ulasan', style: poppinsTheme.headline6),
+                  children: [
+                    ReviewCard(
+                      restaurant: restaurant,
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 20,
