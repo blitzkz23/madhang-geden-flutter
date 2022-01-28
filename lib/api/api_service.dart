@@ -15,7 +15,7 @@ class ApiService {
     if (response.statusCode == 200) {
       return RestaurantResult.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load list of restaurant');
+      throw Exception('Gagal mendapatkan daftar restoran');
     }
   }
 
@@ -24,17 +24,17 @@ class ApiService {
     if (response.statusCode == 200) {
       return RestaurantDetail.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load detail of restaurant');
+      throw Exception('Gagal mendapatkan detail restoran');
     }
   }
 
   Future<RestaurantSearch> searchRestaurant(String query) async {
     final response =
-        await http.get(Uri.parse(_baseUrl + _search + "?q=" + query));
+        await http.get(Uri.parse(_baseUrl + _search + "?q=$query"));
     if (response.statusCode == 200) {
       return RestaurantSearch.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to search for restaurant');
+      throw Exception('Gagal mendapatkan hasil pencarian restoran');
     }
   }
 }
