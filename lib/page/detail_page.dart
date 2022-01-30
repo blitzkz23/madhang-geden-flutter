@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/common/styles.dart';
@@ -43,13 +44,35 @@ class _DetailPageState extends State<DetailPage> {
             var restaurant = state.result.restaurant;
             return _buildDetailPage(restaurant, _sigmaX, _sigmaY, _opacity);
           } else if (state.state == ResultState.noData) {
-            return Center(
-              child: Text(state.message),
-            );
+            return Scaffold(
+                body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset('assets/error.json'),
+                  Text(
+                    state.message,
+                    textAlign: TextAlign.center,
+                    style: poppinsTheme.headline6,
+                  ),
+                ],
+              ),
+            ));
           } else if (state.state == ResultState.error) {
-            return Center(
-              child: Text(state.message),
-            );
+            return Scaffold(
+                body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset('assets/error.json'),
+                  Text(
+                    state.message,
+                    textAlign: TextAlign.center,
+                    style: poppinsTheme.headline6,
+                  ),
+                ],
+              ),
+            ));
           } else {
             return const Center(
               child: Text(''),
@@ -82,6 +105,7 @@ class _DetailPageState extends State<DetailPage> {
                     child: Image.network(
                       DetailPage.pictureUrl + restaurant.pictureId,
                       height: 300,
+                      width: double.infinity,
                       fit: BoxFit.cover,
                     ),
                   ),

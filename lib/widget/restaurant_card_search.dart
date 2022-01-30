@@ -24,7 +24,7 @@ class RestaurantCardSearch extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Hero(
-                  tag: pictureUrl + resto.pictureId,
+                  tag: resto.id,
                   child: FadeInImage.assetNetwork(
                     placeholder: 'assets/loading.gif',
                     image: pictureUrl + resto.pictureId,

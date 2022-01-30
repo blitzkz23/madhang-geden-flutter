@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
@@ -16,6 +17,8 @@ class RestaurantListSection extends StatefulWidget {
 class _RestaurantListSectionState extends State<RestaurantListSection> {
   @override
   Widget build(BuildContext context) {
+    final _size = MediaQuery.of(context).size;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -38,11 +41,11 @@ class _RestaurantListSectionState extends State<RestaurantListSection> {
           ),
         ),
         SizedBox(
+          height: _size.height * 0.70,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: _buildList(),
           ),
-          height: 555,
         ),
       ],
     );
@@ -67,11 +70,29 @@ Widget _buildList() {
         );
       } else if (state.state == ResultState.noData) {
         return Center(
-          child: Text(state.message),
+          child: Column(
+            children: [
+              Lottie.asset('assets/error.json'),
+              Text(
+                state.message,
+                textAlign: TextAlign.center,
+                style: poppinsTheme.headline6,
+              ),
+            ],
+          ),
         );
       } else if (state.state == ResultState.error) {
         return Center(
-          child: Text(state.message),
+          child: Column(
+            children: [
+              Lottie.asset('assets/error.json'),
+              Text(
+                state.message,
+                textAlign: TextAlign.center,
+                style: poppinsTheme.headline6,
+              ),
+            ],
+          ),
         );
       } else {
         return const Center(

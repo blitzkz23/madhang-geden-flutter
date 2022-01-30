@@ -31,7 +31,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
 
       if (restaurantDetail.restaurant == '') {
         _state = ResultState.noData;
-        return _message = 'Restaurant not found';
+        return _message = 'Data tidak tersedia.';
       } else {
         _state = ResultState.hasData;
         notifyListeners();
@@ -40,7 +40,8 @@ class RestaurantDetailProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message =
+          'Gagal memuat data, silahkan periksa koneksi internet Anda.';
     }
   }
 }

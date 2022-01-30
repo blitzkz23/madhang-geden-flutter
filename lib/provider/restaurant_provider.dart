@@ -29,7 +29,7 @@ class RestaurantProvider extends ChangeNotifier {
 
       if (restaurant.restaurants.isEmpty) {
         _state = ResultState.noData;
-        return _message = 'Empty Data';
+        return _message = 'Data tidak tersedia.';
       } else {
         _state = ResultState.hasData;
         notifyListeners();
@@ -38,7 +38,8 @@ class RestaurantProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message =
+          'Gagal memuat data, silahkan periksa koneksi internet Anda.';
     }
   }
 }
