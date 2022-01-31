@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   height: 4,
                 ),
                 Text(
-                  'Find recommended restaurant near your area.',
+                  'Cari rekomendasi restaurant di dekat Anda.',
                   style: poppinsTheme.subtitle1?.copyWith(
                     color: Colors.white,
                     fontSize: 20,

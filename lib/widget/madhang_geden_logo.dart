@@ -12,15 +12,16 @@ class MadhangGedenLogo extends StatelessWidget {
       children: [
         Image.asset(
           'images/madhang_geden_logo2.png',
-          width: 40,
-          height: 40,
+          width: 60,
+          height: 60,
         ),
         const SizedBox(
-          width: 4,
+          width: 8,
         ),
         Text(
           'Madhang Geden',
           style: GoogleFonts.montserrat(
+            fontSize: 20,
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
