@@ -1,12 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
+import 'package:restaurant_app/provider/restaurant_post_review_provider.dart';
 import 'package:restaurant_app/widget/review_card.dart';
 
 class DetailPage extends StatefulWidget {
@@ -85,6 +87,9 @@ class _DetailPageState extends State<DetailPage> {
 
   Scaffold _buildDetailPage(
       Restaurant restaurant, double _sigmaX, double _sigmaY, double _opacity) {
+    String _name = '';
+    String _review = '';
+
     return Scaffold(
       backgroundColor: kWhiteColor,
       body: NestedScrollView(
@@ -233,6 +238,139 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 const SizedBox(
                   height: 20,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 55,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ChangeNotifierProvider(
+                            create: (_) => RestaurantPostReviewProvider(
+                                apiService: ApiService()),
+                            child: Consumer<RestaurantPostReviewProvider>(
+                              builder: (context, state, _) {
+                                return AlertDialog(
+                                  insetPadding: const EdgeInsets.all(10),
+                                  actions: [
+                                    Center(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 16.0),
+                                        child: SizedBox(
+                                          height: 55,
+                                          child: ElevatedButton(
+                                              onPressed: () {
+                                                state.postReview(
+                                                  restaurant.id,
+                                                  _name,
+                                                  _review,
+                                                );
+                                              },
+                                              child: const Text(
+                                                  'Tambahkan Ulasan')),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                  content: SizedBox(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Tuliskan Sebuah Ulasan',
+                                          style: poppinsTheme.headline6,
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.only(top: 16.0),
+                                          child: Text("Nama: "),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 8.0),
+                                          child: TextFormField(
+                                            cursorColor: kBlackColor,
+                                            decoration: InputDecoration(
+                                                fillColor: Colors.white,
+                                                filled: true,
+                                                hintText:
+                                                    'Masukkan nama Anda...',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: kRedPrimary),
+                                                )),
+                                            onChanged: (value) {
+                                              _name = value;
+                                            },
+                                          ),
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.only(top: 16.0),
+                                          child: Text("Review: "),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 8.0),
+                                          child: TextFormField(
+                                            cursorColor: kBlackColor,
+                                            decoration: InputDecoration(
+                                                fillColor: Colors.white,
+                                                filled: true,
+                                                hintMaxLines: 3,
+                                                hintText:
+                                                    'Masukkan sebuah ulasan...',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: kRedPrimary),
+                                                )),
+                                            onChanged: (value) {
+                                              _review = value;
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.add),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          'Tambah Ulasan',
+                          style: poppinsTheme.headline6
+                              ?.copyWith(fontWeight: FontWeight.w700),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
                 ),
               ],
             ),

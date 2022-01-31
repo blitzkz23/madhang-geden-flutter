@@ -17,7 +17,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController queryController = TextEditingController();
-  late String query = '';
+  late String _query = '';
 
   @override
   Widget build(BuildContext context) {
@@ -70,19 +70,19 @@ class _SearchPageState extends State<SearchPage> {
                                       const BorderSide(color: kRedPrimary),
                                 )),
                             onChanged: (value) {
-                              query = value;
-                              print(query);
-                              state.fetchRestaurantSearch(query);
+                              _query = value;
+                              print(_query);
+                              state.fetchRestaurantSearch(_query);
                               _buildList(context, state);
                             },
                             onFieldSubmitted: (value) {
-                              state.fetchRestaurantSearch(query);
+                              state.fetchRestaurantSearch(_query);
                               _buildList(context, state);
                             },
                           ),
                         ),
                       ),
-                      query.isNotEmpty
+                      _query.isNotEmpty
                           ? _buildList(context, state)
                           : Expanded(
                               child: Center(
@@ -184,5 +184,11 @@ class _SearchPageState extends State<SearchPage> {
         child: Text(''),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    queryController.dispose();
   }
 }
