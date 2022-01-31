@@ -20,6 +20,7 @@ class _RestaurantListSectionState extends State<RestaurantListSection> {
     final _size = MediaQuery.of(context).size;
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -41,9 +42,9 @@ class _RestaurantListSectionState extends State<RestaurantListSection> {
           ),
         ),
         SizedBox(
-          height: _size.height * 0.70,
+          height: _size.height * 0.715,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
             child: _buildList(),
           ),
         ),
@@ -60,13 +61,20 @@ Widget _buildList() {
           child: CircularProgressIndicator(),
         );
       } else if (state.state == ResultState.hasData) {
-        return ListView.builder(
-          itemBuilder: (context, index) {
-            var restaurant = state.result.restaurants[index];
-            return RestaurantCard(resto: restaurant);
-          },
-          shrinkWrap: true,
-          itemCount: state.result.restaurants.length,
+        return Flex(
+          direction: Axis.vertical,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  var restaurant = state.result.restaurants[index];
+                  return RestaurantCard(resto: restaurant);
+                },
+                shrinkWrap: true,
+                itemCount: state.result.restaurants.length,
+              ),
+            ),
+          ],
         );
       } else if (state.state == ResultState.noData) {
         return Center(

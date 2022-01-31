@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:restaurant_app/model/restaurant.dart';
 import 'package:restaurant_app/model/restaurant_detail.dart';
@@ -48,12 +49,12 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      print(response.statusCode);
-      print(response.body);
+      debugPrint('response.statusCode: ${response.statusCode}');
+      debugPrint(response.body);
       return RestaurantPostReview.fromJson(jsonDecode(response.body));
     } else {
-      print(response.statusCode);
-      print(response.body);
+      debugPrint('response.statusCode: ${response.statusCode}');
+      debugPrint(response.body);
       throw Exception('Gagal menambahkan ulasan');
     }
   }
