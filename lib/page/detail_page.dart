@@ -263,11 +263,28 @@ class _DetailPageState extends State<DetailPage> {
                                           height: 55,
                                           child: ElevatedButton(
                                               onPressed: () {
-                                                state.postReview(
-                                                  restaurant.id,
-                                                  _name,
-                                                  _review,
-                                                );
+                                                if (_name.isNotEmpty &&
+                                                    _review.isNotEmpty) {
+                                                  state
+                                                      .postReview(
+                                                    restaurant.id,
+                                                    _name,
+                                                    _review,
+                                                  )
+                                                      .then((value) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                                content: Text(
+                                                                    'Ulasan berhasil terkirim')));
+                                                  });
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(const SnackBar(
+                                                          content: Text(
+                                                              'Teks tidak boleh kosong')));
+                                                }
                                               },
                                               child: const Text(
                                                   'Tambahkan Ulasan')),
@@ -294,6 +311,12 @@ class _DetailPageState extends State<DetailPage> {
                                               const EdgeInsets.only(top: 8.0),
                                           child: TextFormField(
                                             cursorColor: kBlackColor,
+                                            validator: (text) {
+                                              if (text == null) {
+                                                return "Teks tidak boleh kosong";
+                                              }
+                                              return null;
+                                            },
                                             decoration: InputDecoration(
                                                 fillColor: Colors.white,
                                                 filled: true,
@@ -350,6 +373,8 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                           );
                         },
+                      ).then(
+                        (value) => Navigator.pop(context),
                       );
                     },
                     child: Row(

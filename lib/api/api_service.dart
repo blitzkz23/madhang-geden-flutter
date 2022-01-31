@@ -44,11 +44,7 @@ class ApiService {
       String id, String name, String review) async {
     final response = await http.post(
       Uri.parse(_baseUrl + _review),
-      body: jsonEncode(<String, String>{
-        'id': "rqdv5juczeskfw1e867",
-        'name': name,
-        'review': review
-      }),
+      body: <String, String>{'id': id, 'name': name, 'review': review},
     );
 
     if (response.statusCode == 200) {
