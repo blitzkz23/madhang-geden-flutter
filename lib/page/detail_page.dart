@@ -303,15 +303,18 @@ class _DetailPageState extends State<DetailPage> {
                                 )
                                     .then((value) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              'Ulasan berhasil terkirim')));
+                                    const SnackBar(
+                                      content: Text('Ulasan berhasil terkirim'),
+                                    ),
+                                  );
+                                  Navigator.pop(context);
                                 });
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content:
-                                            Text('Teks tidak boleh kosong')));
+                                  const SnackBar(
+                                    content: Text('Teks tidak boleh kosong'),
+                                  ),
+                                );
                               }
                             },
                             child: const Text('Tambahkan Ulasan')),
