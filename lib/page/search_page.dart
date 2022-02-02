@@ -44,8 +44,8 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       Text(
                         'Cari Restoran',
-                        style: poppinsTheme.headline5
-                            ?.copyWith(fontWeight: FontWeight.w700),
+                        style: poppinsTheme.headline6
+                            ?.copyWith(fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -69,7 +69,7 @@ class _SearchPageState extends State<SearchPage> {
                             )),
                         onChanged: (value) {
                           _query = value;
-                          print(_query);
+                          debugPrint(_query);
                           state.fetchRestaurantSearch(_query);
                           _buildList(context, state);
                         },

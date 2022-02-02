@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/model/restaurant_detail.dart';
+import 'package:restaurant_app/page/add_review_page.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
 import 'package:restaurant_app/provider/restaurant_post_review_provider.dart';
 import 'package:restaurant_app/utils/result_state.dart';
@@ -13,12 +14,11 @@ import 'package:restaurant_app/widget/review_card.dart';
 
 class DetailPage extends StatefulWidget {
   static const routeName = '/detail_page';
+  final String restaurantId;
   static String pictureUrl =
       "https://restaurant-api.dicoding.dev/images/medium/";
 
   const DetailPage({Key? key, required this.restaurantId}) : super(key: key);
-
-  final String restaurantId;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -244,9 +244,8 @@ class _DetailPageState extends State<DetailPage> {
                   height: 55,
                   child: ElevatedButton(
                     onPressed: () {
-                      _postReviewDialog(_name, _review, restaurant).then(
-                        (value) => Navigator.pop(context),
-                      );
+                      Navigator.pushNamed(context, AddReviewPage.routeName,
+                          arguments: restaurant);
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -273,126 +272,6 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<dynamic> _postReviewDialog(
-      String _name, String _review, Restaurant restaurant) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return ChangeNotifierProvider(
-          create: (_) => RestaurantPostReviewProvider(apiService: ApiService()),
-          child: Consumer<RestaurantPostReviewProvider>(
-            builder: (context, state, _) {
-              return AlertDialog(
-                insetPadding: const EdgeInsets.all(10),
-                actions: [
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: SizedBox(
-                        height: 55,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              if (_name.isNotEmpty && _review.isNotEmpty) {
-                                state
-                                    .postReview(
-                                  restaurant.id,
-                                  _name,
-                                  _review,
-                                )
-                                    .then((value) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Ulasan berhasil terkirim'),
-                                    ),
-                                  );
-                                  Navigator.pop(context);
-                                });
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Teks tidak boleh kosong'),
-                                  ),
-                                );
-                              }
-                            },
-                            child: const Text('Tambahkan Ulasan')),
-                      ),
-                    ),
-                  )
-                ],
-                content: SizedBox(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Tuliskan Sebuah Ulasan',
-                        style: poppinsTheme.headline6,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 16.0),
-                        child: Text("Nama: "),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: TextFormField(
-                          cursorColor: kBlackColor,
-                          validator: (text) {
-                            if (text == null) {
-                              return "Teks tidak boleh kosong";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: 'Masukkan nama Anda...',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: kRedPrimary),
-                              )),
-                          onChanged: (value) {
-                            _name = value;
-                          },
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 16.0),
-                        child: Text("Review: "),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: TextFormField(
-                          cursorColor: kBlackColor,
-                          decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintMaxLines: 3,
-                              hintText: 'Masukkan sebuah ulasan...',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: kRedPrimary),
-                              )),
-                          onChanged: (value) {
-                            _review = value;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
     );
   }
 }
