@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/page/restaurant_list_section.dart';
 import 'package:restaurant_app/page/search_page.dart';
-import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/widget/madhang_geden_logo.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,13 +41,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            /**
-             * Provide API service with provide to RestaurantListSection class
-             */
-            ChangeNotifierProvider(
-              create: (_) => RestaurantProvider(apiService: ApiService()),
-              child: const RestaurantListSection(),
-            ),
+            const RestaurantListSection(),
           ],
         ),
       ),

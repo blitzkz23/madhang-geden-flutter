@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/model/restaurant_post_review.dart';
-
-enum PostResultState { loading, hasData, noData, error }
+import 'package:restaurant_app/utils/result_state.dart';
 
 class RestaurantPostReviewProvider extends ChangeNotifier {
   final ApiService apiService;
@@ -12,14 +11,14 @@ class RestaurantPostReviewProvider extends ChangeNotifier {
   }
 
   late RestaurantPostReview _reviewResult;
-  late PostResultState _state;
+  late ResultState _state;
   String _message = '';
   String _id = '';
   String _name = '';
   String _review = '';
 
   RestaurantPostReview get result => _reviewResult;
-  PostResultState get state => _state;
+  ResultState get state => _state;
   String get message => _message;
   String get id => _id;
   String get name => _name;
@@ -28,7 +27,7 @@ class RestaurantPostReviewProvider extends ChangeNotifier {
   Future<dynamic> postReview(String id, String name, String review) async {
     try {
       if (id.isNotEmpty && name.isNotEmpty && review.isNotEmpty) {
-        _state = PostResultState.loading;
+        _state = ResultState.loading;
         _id = id;
         _name = name;
         _review = review;
@@ -37,16 +36,16 @@ class RestaurantPostReviewProvider extends ChangeNotifier {
         final customerReview = await apiService.postReview(id, name, review);
 
         if (customerReview.customerReviews.isEmpty) {
-          _state = PostResultState.noData;
+          _state = ResultState.noData;
           return _message = "Ulasan tidak berhasil ditambahkan.";
         } else {
-          _state = PostResultState.hasData;
+          _state = ResultState.hasData;
           notifyListeners();
           return _reviewResult = customerReview;
         }
       }
     } catch (e) {
-      _state = PostResultState.error;
+      _state = ResultState.error;
       notifyListeners();
       return _message =
           'Gagal menambahkan ulasan, silahkan periksa koneksi internet Anda. $e';

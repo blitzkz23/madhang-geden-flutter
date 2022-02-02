@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/model/restaurant_search.dart';
-
-enum ResultState { loading, noData, hasData, error }
+import 'package:restaurant_app/utils/result_state.dart';
 
 class RestaurantSearchProvider extends ChangeNotifier {
   final ApiService apiService;
