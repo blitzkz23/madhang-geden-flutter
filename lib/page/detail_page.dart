@@ -86,9 +86,6 @@ class _DetailPageState extends State<DetailPage> {
 
   Scaffold _buildDetailPage(
       Restaurant restaurant, double _sigmaX, double _sigmaY, double _opacity) {
-    String _name = '';
-    String _review = '';
-
     return Scaffold(
       backgroundColor: kWhiteColor,
       body: NestedScrollView(
@@ -124,6 +121,15 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    bottom: 20,
+                    right: 20,
+                    child: FloatingActionButton(
+                      backgroundColor: kWhiteColor,
+                      onPressed: () {},
+                      child: const Icon(Icons.favorite_border),
+                    ),
+                  )
                 ]),
               ),
             )
