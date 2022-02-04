@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
-import 'package:restaurant_app/model/restaurant_detail.dart';
+import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/page/detail_page.dart';
 import 'package:restaurant_app/provider/restaurant_post_review_provider.dart';
 
@@ -53,11 +53,17 @@ class _AddReviewPageState extends State<AddReviewPage> {
                   ],
                 ),
               ),
-              Image.network(
-                AddReviewPage.pictureUrl + widget.restaurant.pictureId,
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover,
+              Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        AddReviewPage.pictureUrl + widget.restaurant.pictureId,
+                      ),
+                    )),
               ),
               Padding(
                 padding:

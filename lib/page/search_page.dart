@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/provider/restaurant_search_provider.dart';
 import 'package:restaurant_app/utils/result_state.dart';
@@ -29,7 +28,8 @@ class _SearchPageState extends State<SearchPage> {
           backgroundColor: kWhiteColor,
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding:
+                  const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
               child: Column(
                 children: [
                   Row(
@@ -134,14 +134,18 @@ class _SearchPageState extends State<SearchPage> {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SizedBox(
-          height: _size.height * 0.702,
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              var restaurant = state.result.restaurants[index];
-              return RestaurantCardSearch(resto: restaurant);
-            },
-            shrinkWrap: true,
-            itemCount: state.result.restaurants.length,
+          height: _size.height * 0.728,
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                var restaurant = state.result.restaurants[index];
+                return RestaurantCardSearch(resto: restaurant);
+              },
+              shrinkWrap: true,
+              itemCount: state.result.restaurants.length,
+            ),
           ),
         ),
       );

@@ -66,13 +66,17 @@ Widget _buildList() {
           direction: Axis.vertical,
           children: [
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  var restaurant = state.result.restaurants[index];
-                  return RestaurantCard(resto: restaurant);
-                },
-                shrinkWrap: true,
-                itemCount: state.result.restaurants.length,
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    var restaurant = state.result.restaurants[index];
+                    return RestaurantCard(resto: restaurant);
+                  },
+                  shrinkWrap: true,
+                  itemCount: state.result.restaurants.length,
+                ),
               ),
             ),
           ],

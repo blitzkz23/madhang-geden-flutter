@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/page/add_review_page.dart';
 import 'package:restaurant_app/page/detail_page.dart';
 import 'package:restaurant_app/page/search_page.dart';
@@ -9,7 +8,8 @@ import 'package:restaurant_app/provider/restaurant_post_review_provider.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/provider/restaurant_search_provider.dart';
 import 'common/styles.dart';
-import 'model/restaurant_detail.dart';
+import 'data/api/api_service.dart';
+import 'data/model/restaurant_detail.dart';
 import 'page/splash_screen.dart';
 import 'page/home_page.dart';
 
