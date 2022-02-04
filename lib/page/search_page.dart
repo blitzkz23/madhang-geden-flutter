@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/provider/restaurant_search_provider.dart';
 import 'package:restaurant_app/utils/result_state.dart';
-import 'package:restaurant_app/widget/restaurant_card_search.dart';
 import 'package:lottie/lottie.dart';
+import 'package:restaurant_app/widget/restaurant_card.dart';
 
 class SearchPage extends StatefulWidget {
   static const String routeName = '/search_page';
@@ -131,21 +131,18 @@ class _SearchPageState extends State<SearchPage> {
         ),
       );
     } else if (state.state == ResultState.hasData) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: SizedBox(
-          height: _size.height * 0.728,
-          child: MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                var restaurant = state.result.restaurants[index];
-                return RestaurantCardSearch(resto: restaurant);
-              },
-              shrinkWrap: true,
-              itemCount: state.result.restaurants.length,
-            ),
+      return SizedBox(
+        height: _size.height * 0.728,
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              var restaurant = state.result.restaurants[index];
+              return RestaurantCard(restaurant: restaurant);
+            },
+            shrinkWrap: true,
+            itemCount: state.result.restaurants.length,
           ),
         ),
       );

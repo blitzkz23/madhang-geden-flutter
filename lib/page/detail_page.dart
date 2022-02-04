@@ -7,6 +7,7 @@ import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/page/add_review_page.dart';
+import 'package:restaurant_app/provider/database_provider.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
 import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widget/review_card.dart';
@@ -121,15 +122,33 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 20,
-                    right: 20,
-                    child: FloatingActionButton(
-                      backgroundColor: kWhiteColor,
-                      onPressed: () {},
-                      child: const Icon(Icons.favorite_border),
-                    ),
-                  )
+                  // Consumer<DatabaseProvider>(
+                  //   builder: (context, provider, child) {
+                  //     return FutureBuilder<bool>(
+                  //       future: provider.isFavorited(restaurant.id),
+                  //       builder: (context, snapshot) {
+                  //         var isFavorited = snapshot.data ?? false;
+                  //         return Positioned(
+                  //           bottom: 20,
+                  //           right: 20,
+                  //           child: isFavorited
+                  //               ? FloatingActionButton(
+                  //                   backgroundColor: kWhiteColor,
+                  //                   onPressed: () =>
+                  //                       provider.removeFavorited(restaurant.id),
+                  //                   child: const Icon(Icons.favorite),
+                  //                 )
+                  //               : FloatingActionButton(
+                  //                   backgroundColor: kWhiteColor,
+                  //                   onPressed: () =>
+                  //                       provider.addFavorite(restaurant),
+                  //                   child: const Icon(Icons.favorite_border),
+                  //                 ),
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  // )
                 ]),
               ),
             )
@@ -249,7 +268,8 @@ class _DetailPageState extends State<DetailPage> {
                   height: 55,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, AddReviewPage.routeName,
+                      Navigator.pushReplacementNamed(
+                          context, AddReviewPage.routeName,
                           arguments: restaurant);
                     },
                     child: Row(

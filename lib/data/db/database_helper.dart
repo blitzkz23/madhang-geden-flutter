@@ -14,34 +14,39 @@ class DatabaseHelper {
   static const String _tblFavorite = 'favorites';
 
   /// [_initalizeDatabase] is used to initialize the database by creating path and query to create table.
-  Future<Database> _initalizeDb() async {
+  Future<Database> _initializeDb() async {
     var path = await getDatabasesPath();
-    var db = openDatabase('$path/fav_restaurants.db', version: 1,
-        onCreate: (db, version) async {
-      await db.execute('''
+    var db = openDatabase(
+      '$path/fav_restaurants.db',
+      onCreate: (db, version) async {
+        await db.execute('''
         CREATE TABLE $_tblFavorite (
-          id INTEGER PRIMARY KEY,
+          id TEXT PRIMARY KEY,
           name TEXT,
           description TEXT,
           pictureId TEXT,
           city TEXT,
-          rating REAL,
-          
-        )''');
-    });
+          rating REAL
+        )
+        ''');
+      },
+      version: 1,
+    );
     return db;
   }
 
   Future<Database?> get database async {
-    _database ??= await _initalizeDb();
+    _database ??= await _initializeDb();
     return _database;
   }
 
   /// [insertFavorites] is used to insert the restaurant favorites into the database.
   Future<void> insertFavorites(Restaurant restaurant) async {
     final db = await database;
-    await db?.insert(_tblFavorite, restaurant.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await db!.insert(
+      _tblFavorite,
+      restaurant.toJson(),
+    );
   }
 
   /// [getFavorites] is used to get the restaurant favorites from the database.
@@ -55,8 +60,12 @@ class DatabaseHelper {
   /// [getFavoritesById] is used to get the restaurant favorites from the database by id.
   Future<Map> getFavoritesById(String id) async {
     final db = await database;
-    final List<Map<String, dynamic>> results =
-        await db!.query(_tblFavorite, where: 'id = ?', whereArgs: [id]);
+
+    final List<Map<String, dynamic>> results = await db!.query(
+      _tblFavorite,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
 
     if (results.isNotEmpty) {
       return results.first;
@@ -65,8 +74,8 @@ class DatabaseHelper {
     }
   }
 
-  /// [deleteFavorites] is used to delete the restaurant favorites from the database.
-  Future<void> deleteFavorites(String id) async {
+  /// [removeFavorited] is used to delete the restaurant favorites from the database.
+  Future<void> removeFavorited(String id) async {
     final db = await database;
     await db?.delete(_tblFavorite, where: 'id = ?', whereArgs: [id]);
   }

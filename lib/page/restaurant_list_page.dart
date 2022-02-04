@@ -90,11 +90,8 @@ class _RestaurantListSectionState extends State<RestaurantListSection> {
           ),
         ),
         SizedBox(
-          height: _size.height * 0.715 - 60 - 15,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-            child: _buildList(),
-          ),
+          height: _size.height * 0.715 - 60,
+          child: _buildList(),
         ),
       ],
     );
@@ -119,7 +116,7 @@ Widget _buildList() {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     var restaurant = state.result.restaurants[index];
-                    return RestaurantCard(resto: restaurant);
+                    return RestaurantCard(restaurant: restaurant);
                   },
                   shrinkWrap: true,
                   itemCount: state.result.restaurants.length,

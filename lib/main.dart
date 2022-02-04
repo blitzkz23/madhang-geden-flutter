@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:provider/provider.dart';
+import 'package:restaurant_app/data/db/database_helper.dart';
 import 'package:restaurant_app/page/add_review_page.dart';
 import 'package:restaurant_app/page/detail_page.dart';
 import 'package:restaurant_app/page/search_page.dart';
+import 'package:restaurant_app/provider/database_provider.dart';
 import 'package:restaurant_app/provider/restaurant_post_review_provider.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/provider/restaurant_search_provider.dart';
+import 'package:restaurant_app/provider/scheduling_provider.dart';
 import 'common/styles.dart';
 import 'data/api/api_service.dart';
 import 'data/model/restaurant_detail.dart';
@@ -34,6 +37,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<RestaurantPostReviewProvider>(
           create: (_) => RestaurantPostReviewProvider(apiService: ApiService()),
         ),
+        ChangeNotifierProvider<DatabaseProvider>(
+          create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()),
+        ),
+        ChangeNotifierProvider<SchedulingProvider>(
+            create: (_) => SchedulingProvider()),
       ],
       child: MaterialApp(
           title: 'Flutter Demo',

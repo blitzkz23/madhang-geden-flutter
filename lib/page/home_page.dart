@@ -40,7 +40,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _listWidget[_bottomNavIndex],
       bottomNavigationBar: CurvedNavigationBar(
-        animationDuration: Duration(milliseconds: 500),
+        height: 60,
+        animationDuration: const Duration(milliseconds: 200),
         backgroundColor: kRedPrimary,
         items: _bottomNavBarItems,
         onTap: _onBottomNavTapped,
