@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:restaurant_app/api/api_service.dart';
-import 'package:restaurant_app/model/restaurant_detail.dart';
-
-enum ResultState { loading, noData, hasData, error }
+import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/data/model/restaurant_detail.dart';
+import 'package:restaurant_app/utils/result_state.dart';
 
 class RestaurantDetailProvider extends ChangeNotifier {
   final ApiService apiService;
@@ -29,7 +28,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
       notifyListeners();
       final restaurantDetail = await apiService.restaurantDetail(restaurantId);
 
-      if (restaurantDetail.restaurant == '') {
+      if (restaurantDetail.error) {
         _state = ResultState.noData;
         return _message = 'Data tidak tersedia.';
       } else {
