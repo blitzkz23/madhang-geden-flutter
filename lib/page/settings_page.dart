@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
+import 'package:restaurant_app/provider/preferences_provider.dart';
 import 'package:restaurant_app/provider/scheduling_provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -33,28 +34,40 @@ class _SettingsPageState extends State<SettingsPage> {
               height: 400,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: ListView(
-                  children: [
-                    Material(
-                      child: ListTile(
-                        title: const Text('Jadwal Harian'),
-                        trailing: Consumer<SchedulingProvider>(
-                          builder: (context, scheduled, _) {
-                            return Switch.adaptive(
-                              value: false,
-                              onChanged: (value) async {
-                                // if (Platform.isIOS) {
-                                //   customDialog(context);
-                                // } else {
-                                //   scheduled.scheduledNews(value);
-                                //   provider.enableDailyNews(value);
+                child: Consumer<PreferencesProvider>(
+                  builder: (context, provider, child) {
+                    return ListView(
+                      children: [
+                        Material(
+                          child: ListTile(
+                            title: const Text('Rekomendasi Harian'),
+                            trailing: Consumer<SchedulingProvider>(
+                              builder: (context, scheduled, _) {
+                                return Switch.adaptive(
+                                  value: provider.isDailyReminderActive,
+                                  onChanged: (value) async {
+                                    scheduled.scheduledRecommender(value);
+                                    provider.enableDailyReminder(value);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          scheduled.message,
+                                          style: poppinsTheme.subtitle1
+                                              ?.copyWith(color: Colors.white),
+                                        ),
+                                        backgroundColor: kRedPrimary,
+                                        duration: const Duration(seconds: 1),
+                                      ),
+                                    );
+                                  },
+                                );
                               },
-                            );
-                          },
-                        ),
-                      ),
-                    )
-                  ],
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
                 ),
               ),
             )
