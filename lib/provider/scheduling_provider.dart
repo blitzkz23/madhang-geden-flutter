@@ -15,7 +15,7 @@ class SchedulingProvider extends ChangeNotifier {
   Future<bool> scheduledRecommender(bool value) async {
     _isScheduled = value;
     if (_isScheduled) {
-      print('SchedulingProvider: Scheduling Recommender Activated');
+      debugPrint('SchedulingProvider: Scheduling Recommender Activated');
       _message = "Rekomendasi harian telah diaktifkan.";
       notifyListeners();
       return await AndroidAlarmManager.periodic(
@@ -27,7 +27,7 @@ class SchedulingProvider extends ChangeNotifier {
         wakeup: true,
       );
     } else {
-      print('SchedulingProvider: Scheduling Recommender Deactivated.');
+      debugPrint('SchedulingProvider: Scheduling Recommender Deactivated.');
       _message = "Rekomendasi harian telah dinon-aktifkan";
       notifyListeners();
       return await AndroidAlarmManager.cancel(1);

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
@@ -35,7 +36,7 @@ class NotificationHelper {
       if (payload != null) {
         var data = Restaurant.fromJson(json.decode(payload));
         var restaurantId = data.id;
-        print('notification payload: ' + payload);
+        debugPrint('notification payload: ' + payload);
         await Navigation.intentWithData(DetailPage.routeName, restaurantId);
       }
       selectNotificationSubject.add(payload ?? 'Empty Payload');

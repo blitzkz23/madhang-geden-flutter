@@ -28,7 +28,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
       notifyListeners();
       final restaurantDetail = await apiService.restaurantDetail(restaurantId);
 
-      if (restaurantDetail.restaurant == '') {
+      if (restaurantDetail.error) {
         _state = ResultState.noData;
         return _message = 'Data tidak tersedia.';
       } else {
