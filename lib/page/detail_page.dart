@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/page/add_review_page.dart';
-import 'package:restaurant_app/provider/database_provider.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
 import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widget/review_card.dart';
@@ -35,7 +35,7 @@ class _DetailPageState extends State<DetailPage> {
 
     return ChangeNotifierProvider(
       create: (_) => RestaurantDetailProvider(
-          apiService: ApiService(), restaurantId: restaurantId),
+          apiService: ApiService(Client()), restaurantId: restaurantId),
       child: Consumer<RestaurantDetailProvider>(
         builder: (context, state, _) {
           if (state.state == ResultState.loading) {

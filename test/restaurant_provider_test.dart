@@ -2,22 +2,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
-import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:mockito/mockito.dart';
+import 'package:http/http.dart' as http;
+import 'restaurant_detail_provider_test.mocks.dart';
 
-import 'restaurant_provider_test.mocks.dart';
-
-@GenerateMocks([ApiService, RestaurantProvider])
+@GenerateMocks([http.Client])
 void main() {
   group('Restaurant List API Test', () {
     late Restaurant restaurant;
-    late ApiService apiService;
-    RestaurantProvider restaurantProvider;
-    late List<Restaurant> restaurants;
+    final client = MockClient();
 
     setUp(() {
-      apiService = MockApiService();
-      restaurantProvider = MockRestaurantProvider();
       restaurant = Restaurant(
           id: "rqdv5juczeskfw1e867",
           name: "Melting Pot",
@@ -26,7 +21,6 @@ void main() {
           pictureId: "14",
           city: "Medan",
           rating: 4.2);
-      restaurants = [restaurant];
     });
 
     test('Should success parsing json', () {
@@ -34,15 +28,16 @@ void main() {
       expect(result.name, restaurant.name);
     });
 
-    test('Should return restaurant list from API', () async {
-      when(apiService.restaurantList()).thenAnswer((_) async {
-        return RestaurantResult(
-          error: false,
-          message: 'success',
-          count: 20,
-          restaurants: restaurants,
-        );
-      });
+    test(
+        'Should return restaurant list if the http call completes successfully',
+        () async {
+      when(client.get(Uri.parse(ApiService.baseUrl + ApiService.list)))
+          .thenAnswer((_) async => http.Response(
+              '{"error":false,"message":"success","count":20,"restaurants":[]}',
+              200));
+
+      expect(
+          await ApiService(client).restaurantList(), isA<RestaurantResult>());
     });
   });
 }
