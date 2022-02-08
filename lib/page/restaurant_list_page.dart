@@ -1,9 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/styles.dart';
+import 'package:restaurant_app/page/search_page.dart';
+import 'package:restaurant_app/widget/madhang_geden_logo.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
+import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widget/restaurant_card.dart';
+
+class RestaurantListPage extends StatefulWidget {
+  static const String pageTitle = 'Restaurants';
+
+  const RestaurantListPage({Key? key}) : super(key: key);
+
+  @override
+  State<RestaurantListPage> createState() => _RestaurantListPageState();
+}
+
+class _RestaurantListPageState extends State<RestaurantListPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: kWhiteColor,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  const MadhangGedenLogo(),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, SearchPage.routeName);
+                    },
+                    icon: const Icon(
+                      Icons.search,
+                      size: 30,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const RestaurantListSection(),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class RestaurantListSection extends StatefulWidget {
   const RestaurantListSection({
@@ -42,11 +90,8 @@ class _RestaurantListSectionState extends State<RestaurantListSection> {
           ),
         ),
         SizedBox(
-          height: _size.height * 0.715,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-            child: _buildList(),
-          ),
+          height: _size.height * 0.715 - 60,
+          child: _buildList(),
         ),
       ],
     );
@@ -65,13 +110,17 @@ Widget _buildList() {
           direction: Axis.vertical,
           children: [
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  var restaurant = state.result.restaurants[index];
-                  return RestaurantCard(resto: restaurant);
-                },
-                shrinkWrap: true,
-                itemCount: state.result.restaurants.length,
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    var restaurant = state.result.restaurants[index];
+                    return RestaurantCard(restaurant: restaurant);
+                  },
+                  shrinkWrap: true,
+                  itemCount: state.result.restaurants.length,
+                ),
               ),
             ),
           ],
